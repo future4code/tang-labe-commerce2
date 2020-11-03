@@ -22,6 +22,15 @@ const ContainerHeader = styled.div`
 
 
 class Header extends React.Component {
+    state = {
+        valueSearch: "",
+      };
+
+    onChangeValueSearch = (event) => {
+    this.setState({ valueSearch: event.target.value })
+    console.log(this.state.valueSearch);
+    }  
+
     render () {
 
 
@@ -32,8 +41,12 @@ class Header extends React.Component {
                 </ContainerInf>
                 <ContainerHeader>
                     <img src="" alt="" />
-                    <input type="text" />
-                    <a><img src={imgCart} alt="" /></a>
+                    <input 
+                    value={this.state.valueSearch}
+                    type="text"
+                    onChange={this.onChangeValueSearch}
+                    />
+                    <a href="#"><img src={imgCart} alt="" /></a>
                 </ContainerHeader>
             
             </Container>

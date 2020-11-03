@@ -5,8 +5,16 @@ import './App.css';
 
 
 class App extends React.Component {
+//   state = {
+//     minValue: "",
+//     maxValue:""
+// };
 
-    
+//   onChangeMinValue = (event) => {
+//     this.setState({ minValue: event.target.value })
+//     console.log(this.state.minValue);
+//   }
+
 
   render () {
 
@@ -15,6 +23,7 @@ class App extends React.Component {
         <div className="App">
           <Header />
           <Main />
+          
         </div>
       )
   }
