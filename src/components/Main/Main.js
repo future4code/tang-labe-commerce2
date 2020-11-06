@@ -15,6 +15,7 @@ const MainMenu = styled.div`
     height: 100%;
     border: 1px solid green;
 `
+
 const MainCards = styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -31,11 +32,15 @@ const MainCart = styled.div`
 
 
 class Main extends React.Component {
+  
   state = {
     minValue: "",
-    maxValue: ""
+    maxValue: "",
+    valueSearch: "",
+    valueSelect: "Crescente"
   };
 
+  
   onChangeMinValue = (event) => {
     this.setState({ minValue: event.target.value })    
   }
@@ -44,7 +49,13 @@ class Main extends React.Component {
     this.setState({ maxValue: event.target.value })    
   }
 
+  onChangeValueSearch = (event) => {
+    this.setState({ valueSearch: event.target.value })    
+  }  
 
+  onChangeValueSelect = (event) => {
+    this.setState({valueSelect: event.target.value})    
+  }
 
   listCards = [
 
@@ -101,39 +112,43 @@ class Main extends React.Component {
 
 
   render() {
-
-    // const listCards = this.listCards.map((post) => {
-    //   return (
-    //     <Cards
-    //       imageUrl={post.imageUrl}
-    //       name={post.name}
-    //       value={post.value}
-    //     />
-    //   )
-    // })
-
     
       let newListCards = this.listCards.filter((card) => {
         // let minValue = this.onChangeMinValue
         // let maxValue = this.onChangeMaxValue
-        let minValue = this.minValue ? this.minValue : 0
-        let maxValue = this.maxValue ? this.maxValue : 1000
+        let minValue = this.state.minValue ? this.state.minValue : 0
+        let maxValue = this.state.maxValue ? this.state.maxValue : 100000
         let isValid = card.value >= minValue  && card.value <= maxValue
         return isValid
+      }).filter((search) => {
+        if (search.name.includes(this.state.valueSearch)) {
+          return true
+        } else {
+          return false
+        }
       })
       
-      newListCards = newListCards.map((post) => {
+      if (this.state.valueSelect === "Crescente") {
+        newListCards.sort(function(a, b) {
+          return a.value - b.value;
+        });
+      } else {
+        newListCards.sort(function(a, b) {
+          return b.value - a.value;
+        });
+      }
+      
+      newListCards = newListCards.map((cards) => {
+
         return (
           <Cards
-            imageUrl={post.imageUrl}
-            name={post.name}
-            value={post.value}
+            imageUrl={cards.imageUrl}
+            name={cards.name}
+            value={cards.value}            
           />
         )
-      })      
+      }) 
  
-  
-
     return (
       <MainContainer>
         <MainMenu>
@@ -151,14 +166,29 @@ class Main extends React.Component {
             type="number"
             onChange={this.onChangeMaxValue}
           />
+          <input 
+            value={this.state.valueSearch}
+            type="text"
+            onChange={this.onChangeValueSearch}
+          />
         </MainMenu>
-        <MainCards>
-          {newListCards}
-        </MainCards>
+        <div>
+          <div>
+            <p>{`Quantidade de Produtos: ${newListCards.length}`}</p>
+            <select value={this.state.valueSelect} onChange={this.onChangeValueSelect} name="select">
+              <option value="Crescente" selected>PREÇO: Crescente</option>
+              <option value="Decrescente" >PREÇO: Decrescente</option>              
+            </select>           
+          </div>
+          <MainCards>
+            {newListCards}
+          </MainCards>
+          
+        </div>
         <MainCart>
           <h1>Carrinho:</h1>
           <div>
-
+            
           </div>
 
           <div>
