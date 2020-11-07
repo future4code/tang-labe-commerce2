@@ -123,10 +123,20 @@ class Main extends React.Component {
       const cart = [...copyOfState, ...this.state.listOfProducts];
       
       this.setState({listOfProducts: cart})
-      console.log(this.state.listOfProducts)
+      
     };
 
-    
+    deletCart = (cartRemove) => {
+      const cartRemover = this.state.listOfProducts.filter((productRemove) => {
+        if (productRemove.id === cartRemove) {
+          return false;
+        }
+        return true;
+      });
+            
+      this.setState({ listOfProducts: cartRemover });
+      
+    };
 
     
 
@@ -174,7 +184,7 @@ class Main extends React.Component {
         i = products.value + i
         return (
             <p>
-                {products.name} : R${products.value} <button onClick={}>X</button>
+                {products.name} : R${products.value} <button onClick={() => this.deletCart(products.id)}>X</button>
             </p>
         )
         })
