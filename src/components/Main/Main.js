@@ -173,7 +173,7 @@ class Main extends React.Component {
             name={cards.name}
             value={cards.value}
             myPropsFunction={this.addProduct}
-            parameterOfFunction={cards.id}           
+            parameterOfFunction={cards.id}          
           />
         )
       }) 
