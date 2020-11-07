@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Cards from '../Cards/Cards';
-import App from '../../App'
+
 
 
 const MainContainer = styled.div`
@@ -37,7 +37,8 @@ class Main extends React.Component {
     minValue: "",
     maxValue: "",
     valueSearch: "",
-    valueSelect: "Crescente"
+    valueSelect: "Crescente",
+    listOfProducts: []
   };
 
   
@@ -111,15 +112,31 @@ class Main extends React.Component {
   ]
 
 
-  render() {
+    addProduct = (id) => {
+      const copyOfState = this.listCards.filter((element) => {
+        if (element.id === id) {
+          return true;
+        }
+        return false;
+      });
+            
+      const cart = [...copyOfState, ...this.state.listOfProducts];
+      
+      this.setState({listOfProducts: cart})
+      
+    };
+
     
-      let newListCards = this.listCards.filter((card) => {
-        // let minValue = this.onChangeMinValue
-        // let maxValue = this.onChangeMaxValue
-        let minValue = this.state.minValue ? this.state.minValue : 0
-        let maxValue = this.state.maxValue ? this.state.maxValue : 100000
-        let isValid = card.value >= minValue  && card.value <= maxValue
-        return isValid
+
+    
+
+  render() {
+
+      let newListCards = this.listCards.filter((card) => {        
+      let minValue = this.state.minValue ? this.state.minValue : 0
+      let maxValue = this.state.maxValue ? this.state.maxValue : 100000
+      let isValid = card.value >= minValue  && card.value <= maxValue
+      return isValid
       }).filter((search) => {
         if (search.name.includes(this.state.valueSearch)) {
           return true
@@ -144,11 +161,25 @@ class Main extends React.Component {
           <Cards
             imageUrl={cards.imageUrl}
             name={cards.name}
-            value={cards.value}            
+            value={cards.value}
+            minhaPropsFuncao={this.addProduct}
+            parametroDaFuncao={cards.id}           
           />
         )
       }) 
- 
+
+      
+      let i = 0
+      let cartList = this.state.listOfProducts.map((products) => {
+        i = products.value + i
+        return (
+            <p>
+                {products.name} : R${products.value}
+            </p>
+        )
+        })
+      
+       
     return (
       <MainContainer>
         <MainMenu>
@@ -188,11 +219,11 @@ class Main extends React.Component {
         <MainCart>
           <h1>Carrinho:</h1>
           <div>
-            
+            {cartList}
           </div>
-
+            
           <div>
-            <h2>Total:</h2>
+            <h2>Total: R${i}</h2>
           </div>
 
         </MainCart>
