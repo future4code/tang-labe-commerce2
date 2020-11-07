@@ -15,7 +15,7 @@ class Cards extends React.Component {
                 <img className={'product-photo'} src={this.props.imageUrl} alt={'Imagem do usuario'}/>
                 <p>{this.props.name}</p>
                 <p>{this.props.value}</p>
-                <button onClick={() => this.props.minhaPropsFuncao(this.props.parametroDaFuncao)}>Adicionar Carrinho</button>
+                <button onClick={() => this.props.myPropsFunction(this.props.parameterOfFunction)}>Adicionar Carrinho</button>
             </div>
 
         )
