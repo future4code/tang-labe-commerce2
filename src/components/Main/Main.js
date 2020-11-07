@@ -172,8 +172,8 @@ class Main extends React.Component {
             imageUrl={cards.imageUrl}
             name={cards.name}
             value={cards.value}
-            minhaPropsFuncao={this.addProduct}
-            parametroDaFuncao={cards.id}           
+            myPropsFunction={this.addProduct}
+            parameterOfFunction={cards.id}           
           />
         )
       }) 
