@@ -118,12 +118,12 @@ class Main extends React.Component {
           return true;
         }
         return false;
-      });
+      })
             
       const cart = [...copyOfState, ...this.state.listOfProducts];
       
       this.setState({listOfProducts: cart})
-      
+      console.log(this.state.listOfProducts)
     };
 
     
@@ -174,7 +174,7 @@ class Main extends React.Component {
         i = products.value + i
         return (
             <p>
-                {products.name} : R${products.value}
+                {products.name} : R${products.value} <button onClick={}>X</button>
             </p>
         )
         })
