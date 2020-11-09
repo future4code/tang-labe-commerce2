@@ -45,7 +45,7 @@ class Header extends React.Component {
                     <img src={imgQuestion}></img>
                     <p>Tire suas dúvidas - FAQ</p>
                 </ContainerInf>
-                <ContainerHeader>
+                {/* <ContainerHeader>
                     <img src="" alt="" />
                     <input 
                     value={this.state.valueSearch}
@@ -54,7 +54,7 @@ class Header extends React.Component {
                     />
                     <a href="#"><img src={imgCart} alt="" /></a>
                 </ContainerHeader>
-            
+             */}
             </Container>
         )
     }

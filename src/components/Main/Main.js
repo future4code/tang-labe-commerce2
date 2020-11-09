@@ -11,7 +11,7 @@ const MainContainer = styled.div`
 `
 
 const MainMenu = styled.div`
-    width: 20%;
+    width: 25%;
     height: 100%;
     border: 1px solid green;
 `
@@ -19,13 +19,14 @@ const MainMenu = styled.div`
 const MainCards = styled.div`
     display: flex;
     flex-wrap: wrap;
-    width: 60%;
-    height: 85vh;
     border: 1px solid black;
+    gap: 30px;
+    justify-content:center
+    
 `
 
 const MainCart = styled.div`
-    width: 20%;
+    width: 25%;
     height: 85vh;
     border: 1px solid yellow;
 `
@@ -62,7 +63,7 @@ class Main extends React.Component {
 
     {
       id: 1,
-      name: "Foguete da Missão Apollo 11",
+      name: "Apollo 11",
       value: 100,
       imageUrl: "https://picsum.photos/200/200?a=1",
     },
@@ -74,7 +75,7 @@ class Main extends React.Component {
     },
     {
       id: 3,
-      name: "Apollo 11",
+      name: "Bananinha 11",
       value: 1000,
       imageUrl: "https://picsum.photos/200/200?a=3",
     },
@@ -111,24 +112,39 @@ class Main extends React.Component {
 
   ]
 
-
+    
     addProduct = (id) => {
       const copyOfState = this.listCards.filter((element) => {
         if (element.id === id) {
           return true;
         }
         return false;
+      }).map((element)=>{
+        //criando uma cópia do elemento
+        const elementCopy = {
+          id: element.id,
+          name: element.name,
+          value: element.value,
+          imageUrl: element.imageUrl,
+        };
+        return elementCopy;
       })
-            
-      const cart = [...copyOfState, ...this.state.listOfProducts];
       
+      const cart = [...copyOfState, ...this.state.listOfProducts].map((element, index) => {
+        //adicionando índice sequencial para identificar unicamente um item 
+        //do carrinho       
+        element.cartItemId = index;
+        return element;
+      })
+      
+    
       this.setState({listOfProducts: cart})
       
     };
 
     deletCart = (cartRemove) => {
       const cartRemover = this.state.listOfProducts.filter((productRemove) => {
-        if (productRemove.id === cartRemove) {
+        if (productRemove.cartItemId === cartRemove) {
           return false;
         }
         return true;
@@ -148,7 +164,7 @@ class Main extends React.Component {
       let isValid = card.value >= minValue  && card.value <= maxValue
       return isValid
       }).filter((search) => {
-        if (search.name.includes(this.state.valueSearch)) {
+        if (search.name.toLowerCase().includes(this.state.valueSearch.toLowerCase())) {
           return true
         } else {
           return false
@@ -184,7 +200,7 @@ class Main extends React.Component {
         i = products.value + i
         return (
             <p>
-                {products.name} : R${products.value} <button onClick={() => this.deletCart(products.id)}>X</button>
+                {products.name} : R${products.value} <button onClick={() => this.deletCart(products.cartItemId)}>X</button>
             </p>
         )
         })
@@ -207,6 +223,8 @@ class Main extends React.Component {
             type="number"
             onChange={this.onChangeMaxValue}
           />
+          <br />
+          <label>Pesquisar:</label>
           <input 
             value={this.state.valueSearch}
             type="text"
